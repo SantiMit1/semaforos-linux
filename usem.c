@@ -15,7 +15,6 @@ union semun
   unsigned short *array;
   struct seminfo *__buf;
   void *__pad;
-  long __align;
 };
 
 void abrir_sem(int *sid, key_t clave);
