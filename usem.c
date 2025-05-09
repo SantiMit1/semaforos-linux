@@ -4,11 +4,11 @@
 #include <sys/types.h>
 #include <sys/ipc.h>
 #include <sys/sem.h>
-#include <errno.h>
+#include <errno.h>        //Esto no estaba incluido
 #define SEM_MAX_RECURSO 1 /* Valor inicial de todos los semáforos */
 #define INI 0             /* Índice del primer semáforo */
-#define SEMMSL 32        /* Máximo número de semáforos por conjunto (ajustar según el sistema) */
-union semun
+#define SEMMSL 32         /* Máximo número de semáforos por conjunto (Tampoco estaba incluido) */
+union semun               // faltaba definir esto
 {
   int val;
   struct semid_ds *buf;
@@ -50,6 +50,7 @@ int main(int argc, char *argv[])
     desbloquear_sem(semset_id, INI);
     break;
   case 'e':
+    abrir_sem(&semset_id, clave); // Se agregó esta línea para abrir el semáforo antes de esperar a que el valor sea cero
     zero_espera_sem(semset_id, INI);
     break;
   case 'b':
@@ -142,7 +143,7 @@ void desbloquear_sem(int sid, int idx)
   /* Intento de desbloquear el semáforo */
   if ((semop(sid, &semdesbloqueo, 1)) == -1)
   {
-    fprintf(stderr, "El Desbloqueo falló\n");
+    fprintf(stderr, "El Desbloqueo falló. Valor de ERRNO: %d\n", errno);
     exit(1);
   }
 }
