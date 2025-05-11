@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
     else
     {
       fprintf(fptr, "%s\n", argv[3]);
-
+      printf("Agregando %s a %s\n", argv[3], argv[2]);
       fclose(fptr);
     }
     desbloquear_sem(semset_id, INI);
