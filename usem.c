@@ -44,10 +44,12 @@ int main(int argc, char *argv[])
   case 't':
     abrir_sem(&semset_id, clave);
     bloquear_sem(semset_id, INI);
+    printf("Toma de recurso compartido.\n");
 
     getchar();
 
     desbloquear_sem(semset_id, INI);
+    printf("Recurso compartido liberado.\n");
     break;
   case 'e':
     abrir_sem(&semset_id, clave); // Se agregó esta línea para abrir el semáforo antes de esperar a que el valor sea cero
